@@ -2,18 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Logic View: Truth Table Generator</title>
+    <title>Truth Table Generator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="loadingOverlay">
+        <div class="loader-text">Generating your truth table...</div>
+    </div>
+
     <div class="container">
-        <h1>Logic View <span class="subtitle">— Truth Table Generator</span></h1>
+        <h1>Truth Table Generator</h1>
         <form id="logicForm" autocomplete="off">
-            <label for="logicInput">Enter a propositional logic expression:</label>
-            <input type="text" id="logicInput" placeholder="e.g. P → Q ∨ ¬R" spellcheck="false" />
-            <button type="submit" id="generateBtn">Generate Truth Table</button>
-        </form>
+    <label for="logicInput">Enter a propositional logic expression:</label>
+    
+    <input type="text" id="logicInput" placeholder="e.g. P → Q ∨ ¬R" spellcheck="false" />
+
+    <div class="button-wrapper">
+        <button type="submit" id="generateBtn">Generate Truth Table</button>
+    </div>
+</form>
         <div id="errorMsg" class="error"></div>
         <div id="tableContainer"></div>
         <div id="classification"></div>
@@ -21,6 +29,11 @@
             <span>Supported: AND (<b>&amp;</b> or <b>∧</b>), OR (<b>|</b> or <b>∨</b>), NOT (<b>~</b> or <b>¬</b>), IMPLIES (<b>-&gt;</b> or <b>→</b>), BICONDITIONAL (<b>&lt;-&gt;</b> or <b>↔</b>)</span>
         </div>
     </div>
+    <script>
+        const form = document.getElementById('logicForm');
+        const overlay = document.getElementById('loadingOverlay');
+    </script>
     <script src="script.js"></script>
+
 </body>
 </html>
