@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logic View: Truth Table Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Inline CSS for layout and centering -->
+    <style>
+        /* Make the whole page fill the screen and center content using Flexbox */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #1e1e2f;
+            color: white;
+
+            /* Center everything horizontally and vertically */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Container box for the form and other elements */
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: #2e2e3f;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+        }
+
+        /* Style for the text input field */
+        input[type="text"] {
+            width: 80%;
+            max-width: 400px;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+
+        /* Style for the green "Generate" button */
+        #generateBtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Button hover effect */
+        #generateBtn:hover {
+            background-color: #45a049;
+        }
+
+        /* Subtitle text style */
+        .subtitle {
+            font-size: 18px;
+            color: #00ffaa;
+        }
+
+        /* Supported symbols info bar */
+        .info-bar {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        /* Overlay that appears when generating the truth table */
+        #loadingOverlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            
+            /* Center overlay content */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader-text {
+            color: white;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading screen when truth table is generating -->
+    <div id="loadingOverlay">
+        <div class="loader-text">Generating your truth table...</div>
+    </div>
+
+    <!-- Main content container -->
+    <div class="container">
+        <h1>Logic View <span class="subtitle">— Truth Table Generator</span></h1>
+
+        <!-- Input form -->
+        <form id="logicForm" autocomplete="off">
+            <!-- Label and input field for logic expression -->
+            <label for="logicInput">Enter a propositional logic expression:</label><br>
+            <input type="text" id="logicInput" placeholder="e.g. P → Q ∨ ¬R" spellcheck="false" /><br>
+            
+            <!-- Generate button -->
+            <button type="submit" id="generateBtn">Generate Truth Table</button>
+        </form>
+
+        <!-- Placeholder elements for dynamic content -->
+        <div id="errorMsg" class="error"></div>
+        <div id="tableContainer"></div>
+        <div id="classification"></div>
+
+        <!-- Info about supported logic symbols -->
+        <div class="info-bar">
+            <span>Supported: AND (& or ∧), OR (| or ∨), NOT (~ or ¬), IMPLIES (-> or →), BICONDITIONAL (<-> or ↔)</span>
+        </div>
+    </div>
+
+    <!-- JavaScript logic -->
+    <script src="script.js"></script>
+</body>
+</html>
