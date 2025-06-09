@@ -196,44 +196,62 @@ document.getElementById('logicForm').addEventListener('submit', function (e) {
     hideError();
     document.getElementById('classification').textContent = '';
     document.getElementById('tableContainer').innerHTML = '';
-    let expr = document.getElementById('logicInput').value.trim();
+    
+    const expr = document.getElementById('logicInput').value.trim();
     if (!expr) {
         showError("Please enter a logic expression.");
         return;
     }
-    try {
-        // Map common textual operators to symbols
-        expr = expr.replace(/<->/g, '↔')
-                   .replace(/<=>/g, '↔')
-                   .replace(/->/g, '→')
-                   .replace(/=>/g, '→')
-                   .replace(/~/g, '¬')
-                   .replace(/\bAND\b/gi, '∧')
-                   .replace(/\bOR\b/gi, '∨')
-                   .replace(/\bNOT\b/gi, '¬');
-        let tokens = tokenize(expr);
-        let variables = extractVariables(tokens);
-        if (variables.length === 0) {
-            showError("No logical variables found (use letters like P, Q, R, etc).");
-            return;
+
+    // Show loading overlay
+    const overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex';
+
+    setTimeout(() => {
+        try {
+            // Normalize operators
+            let cleanedExpr = expr.replace(/<->/g, '↔')
+                                  .replace(/<=>/g, '↔')
+                                  .replace(/->/g, '→')
+                                  .replace(/=>/g, '→')
+                                  .replace(/~/g, '¬')
+                                  .replace(/\bAND\b/gi, '∧')
+                                  .replace(/\bOR\b/gi, '∨')
+                                  .replace(/\bNOT\b/gi, '¬');
+    
+            let tokens = tokenize(cleanedExpr);
+            let variables = extractVariables(tokens);
+            if (variables.length === 0) {
+                showError("No logical variables found (use letters like P, Q, R, etc).");
+                overlay.style.display = 'none'; // hide if error
+                return;
+            }
+
+            let postfix = infixToPostfix(tokens);
+            let assignments = generateTruthAssignments(variables);
+            let rows = [];
+            let resultValues = [];
+
+            for (let row of assignments) {
+                let val = evalPostfix(postfix, row);
+                resultValues.push(val);
+                rows.push({ ...row, result: val });
+            }
+
+            document.getElementById('tableContainer').innerHTML = renderTruthTable(variables, rows, getExprLabel(tokens));
+
+            // Classification
+            let c = classifyExpression(resultValues);
+            document.getElementById('classification').innerHTML = `<span style="color:${c.color}">${c.label}</span> <span class="tooltip" title="${c.desc}">&#9432;</span>`;
+
+        } catch (err) {
+            showError("Syntax error: " + err.message);
+        } finally {
+            overlay.style.display = 'none'; // Always hide overlay after processing
         }
-        let postfix = infixToPostfix(tokens);
-        let assignments = generateTruthAssignments(variables);
-        let rows = [];
-        let resultValues = [];
-        for (let row of assignments) {
-            let val = evalPostfix(postfix, row);
-            resultValues.push(val);
-            rows.push({ ...row, result: val });
-        }
-        document.getElementById('tableContainer').innerHTML = renderTruthTable(variables, rows, getExprLabel(tokens));
-        // Classification
-        let c = classifyExpression(resultValues);
-        document.getElementById('classification').innerHTML = `<span style="color:${c.color}">${c.label}</span> <span class="tooltip" title="${c.desc}">&#9432;</span>`;
-    } catch (err) {
-        showError("Syntax error: " + err.message);
-    }
+    }, 5000); // Delay for 5 seconds
 });
+
 
 // Allow copy-paste of logic symbols
 document.getElementById('logicInput').addEventListener('paste', function (e) {
