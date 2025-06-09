@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Truth Table Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Added by carlos joshua */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            margin-bottom: 8px;
+            font-size: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingOverlay">
+        <div class="loader-text">Generating your truth table...</div>
+    </div>
+
+    <div class="container">
+        <h1>Truth Table Generator</h1>
+        <form id="logicForm" autocomplete="off">
+            
+            <!-- carlos joshua -->
+            <div class="form-group">
+                <label for="logicInput">Enter a propositional logic expression:</label>
+                <input type="text" id="logicInput" placeholder="e.g. P → Q ∨ ¬R" spellcheck="false" />
+            </div>
+
+            <div class="button-wrapper">
+                <button type="submit" id="generateBtn">Generate Truth Table</button>
+            </div>
+        </form>
+
+        <div id="errorMsg" class="error"></div>
+        <div id="tableContainer"></div>
+        <div id="classification"></div>
+
+        <div class="info-bar">
+            <span>Supported: AND (<b>&amp;</b> or <b>∧</b>), OR (<b>|</b> or <b>∨</b>), NOT (<b>~</b> or <b>¬</b>), IMPLIES (<b>-&gt;</b> or <b>→</b>), BICONDITIONAL (<b>&lt;-&gt;</b> or <b>↔</b>)</span>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('logicForm');
+        const overlay = document.getElementById('loadingOverlay');
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
