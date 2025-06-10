@@ -108,4 +108,4 @@ _This section is dedicated to personal messages from each member of the group. P
 
 ---
 
-**Made with ❤️ by the LogicView Team for students, educators, and logic enthusiasts everywhere.**
+**Made with Dedication by the BSINFOTECH-1A students (Group 2 in DISCMATH course) for students, educators, and logic enthusiasts everywhere.**
