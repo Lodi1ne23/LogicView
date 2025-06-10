@@ -2,38 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Truth Table Generator</title>
+    <title>LogicView</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
+    <!-- html2canvas for Copy as Image -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
-    <div id="loadingOverlay">
-        <div class="loader-text">Generating your truth table...</div>
+    <div class="theme-toggle-corner">
+        <button id="themeBtn" title="Toggle dark/light mode">
+            <span id="themeIcon" aria-label="Switch Theme">🌙</span>
+        </button>
     </div>
+    <aside class="history-sidebar" id="historySidebar">
+        <div class="sidebar-header">
+            <span>History</span>
+            <button id="closeSidebar" title="Close">×</button>
+        </div>
+        <ul id="historyList"></ul>
+    </aside>
+    <button id="openSidebar" title="Show History"><span>☰</span></button>
 
-    <div class="container">
-        <h1>Truth Table Generator</h1>
-        <form id="logicForm" autocomplete="off">
-    <label for="logicInput">Enter a propositional logic expression:</label>
-    
-    <input type="text" id="logicInput" placeholder="e.g. P → Q ∨ ¬R" spellcheck="false" />
-
-    <div class="button-wrapper">
-        <button type="submit" id="generateBtn">Generate Truth Table</button>
-    </div>
-</form>
+    <!-- Static header layout -->
+    <header class="sticky-header">
+        <div class="logo-row">
+            <span class="logo-blue">LOGIC</span><span class="logo-white">VIEW</span>
+        </div>
+    </header>
+    <main class="main-area">
+        <form id="logicForm" autocomplete="off" class="input-row">
+            <button type="button" id="exampleBtn" class="example-btn" title="Random Example">🎲</button>
+            <input type="text" id="logicInput" placeholder="Enter logical expression..." spellcheck="false" autocomplete="off"/>
+            <button type="submit" id="generateBtn" title="Generate">
+                <span class="btn-icon"></span>
+            </button>
+        </form>
+        <!-- Operator Buttons -->
+        <div class="op-btn-row">
+             <button type="button" class="op-btn" data-insert="∧" title="AND (∧)">&and;</button>
+             <button type="button" class="op-btn" data-insert="∨" title="OR (∨)">&or;</button>
+             <button type="button" class="op-btn" data-insert="¬" title="NOT (¬)">&not;</button>
+             <button type="button" class="op-btn" data-insert="→" title="IMPLIES (→)">→</button>
+             <button type="button" class="op-btn" data-insert="↔" title="BICONDITIONAL (↔)">↔</button>
+        </div>
         <div id="errorMsg" class="error"></div>
         <div id="tableContainer"></div>
-        <div id="classification"></div>
-        <div class="info-bar">
-            <span>Supported: AND (<b>&amp;</b> or <b>∧</b>), OR (<b>|</b> or <b>∨</b>), NOT (<b>~</b> or <b>¬</b>), IMPLIES (<b>-&gt;</b> or <b>→</b>), BICONDITIONAL (<b>&lt;-&gt;</b> or <b>↔</b>)</span>
+        <div id="copyRow" class="copy-row" style="display:none;">
+            <button id="copyTextBtn" class="fun-btn" title="Copy as text">📄 Copy as Text</button>
+            <button id="copyTableBtn" class="fun-btn" title="Copy as table">🗒️ Copy as Table</button>
+            <button id="copyImageBtn" class="fun-btn" title="Copy as image">🖼️ Copy as Image</button>
         </div>
-    </div>
-    <script>
-        const form = document.getElementById('logicForm');
-        const overlay = document.getElementById('loadingOverlay');
-    </script>
+        <div id="classification"></div>
+        <div id="infoPopup" class="info-popup" style="display:none;"></div>
+        <section class="info-section">
+            <h3>Supported Operators</h3>
+            <ul class="supported-list">
+                <li><b>AND</b>: <code>&amp;</code> <code>∧</code> <span class="op-desc">(conjunction)</span></li>
+                <li><b>OR</b>: <code>|</code> <code>∨</code> <span class="op-desc">(disjunction)</span></li>
+                <li><b>NOT</b>: <code>~</code> <code>¬</code> <span class="op-desc">(negation)</span></li>
+                <li><b>IMPLIES</b>: <code>-&gt;</code> <code>→</code> <span class="op-desc">(implication)</span></li>
+                <li><b>BICONDITIONAL</b>: <code>&lt;-&gt;</code> <code>↔</code> <span class="op-desc">(if and only if)</span></li>
+                <li><b>Parentheses</b>: <code>( )</code> <span class="op-desc">(grouping)</span></li>
+                <li><b>Variables</b>: <code>A</code>, <code>B</code>, ... <span class="op-desc">(any single uppercase letter)</span></li>
+            </ul>
+        </section>
+    </main>
     <script src="script.js"></script>
-
 </body>
 </html>
