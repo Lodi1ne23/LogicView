@@ -96,16 +96,4 @@ LogicView/
 
 ---
 
-## 💬 Group Members' Messages
-
-_This section is dedicated to personal messages from each member of the group. Please add your name and a message below:_
-
-- **[Member 1 Name]:** _Your message here!_
-- **[Member 2 Name]:** _Your message here!_
-- **[Member 3 Name]:** _Your message here!_
-- **[Member 4 Name]:** _Your message here!_
-- _(Add more as needed)_
-
----
-
 **Made with Dedication by the BSINFOTECH-1A students (Group 2 in DISCMATH course) for students, educators, and logic enthusiasts everywhere.**
